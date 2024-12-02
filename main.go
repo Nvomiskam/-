@@ -130,14 +130,14 @@ func (w Walking) Calories() float64 {
 	if w.Height == 0 {
 		return 0
 	}
-	return ((float64(CaloriesWeightMultiplier)*w.Weight + (math.Pow(w.meanSpeed(), 2)/w.Height/float64(CmInM))*CaloriesSpeedHeightMultiplier*w.Weight) * float64(w.Duration.Hours()*MinsInHour))
+	return ((float64(CaloriesWeightMultiplier)*w.Weight + (math.Pow(w.meanSpeed(), 2)/w.Height/float64(CmInM))*CaloriesSpeedHeightMultiplier*w.Weight) * float64(w.Duration.Hours()*MinInHour))
 }
 
 // TrainingInfo возвращает структуру InfoMessage с информацией о проведенной тренировке.
 // Это переопределенный метод TrainingInfo() из Training.
 func (w Walking) TrainingInfo() InfoMessage {
 	// вставьте ваш код ниже
-	return InfoMessage{TrainingType: w.TrainingType, Duration: w.Duration, Distance: w.distance(), Speed: w.meanSpeed(), Calories: w.Calories()}
+	return w.Training.TrainingInfo()
 }
 
 // Константы для расчета потраченных килокалорий при плавании.
@@ -185,7 +185,7 @@ func (s Swimming) TrainingInfo() InfoMessage {
 // ReadData возвращает информацию о проведенной тренировке.
 func ReadData(training CaloriesCalculator) string {
 	// получите количество затраченных калорий
-	calories := training.Calories()
+	calories := training.calories()
 
 	// получите информацию о тренировке
 	info := training.TrainingInfo()
