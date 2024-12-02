@@ -75,7 +75,7 @@ func (i InfoMessage) String() string {
 // CaloriesCalculator интерфейс для структур: Running, Walking и Swimming.
 type CaloriesCalculator interface {
 	// добавьте необходимые методы в интерфейс
-	calories()
+	Calories() float64
 	TrainingInfo() InfoMessage
 }
 
@@ -130,7 +130,7 @@ func (w Walking) Calories() float64 {
 	if w.Height == 0 {
 		return 0
 	}
-	return ((float64(CaloriesWeightMultiplier)*w.Weight + (math.Pow(w.meanSpeed(), 2)/w.Height/float64(CmInM))*CaloriesSpeedHeightMultiplier*w.Weight) * float64(w.Duration.Hours()*MinInHour))
+	return ((float64(CaloriesWeightMultiplier)*w.Weight + (math.Pow(w.meanSpeed(), 2)/w.Height/float64(CmInM))*CaloriesSpeedHeightMultiplier*w.Weight) * float64(w.Duration.Hours()*MinInHours))
 }
 
 // TrainingInfo возвращает структуру InfoMessage с информацией о проведенной тренировке.
@@ -185,7 +185,7 @@ func (s Swimming) TrainingInfo() InfoMessage {
 // ReadData возвращает информацию о проведенной тренировке.
 func ReadData(training CaloriesCalculator) string {
 	// получите количество затраченных калорий
-	calories := training.calories()
+	calories := training.Calories()
 
 	// получите информацию о тренировке
 	info := training.TrainingInfo()
